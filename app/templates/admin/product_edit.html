@@ -1,0 +1,112 @@
+<!-- C:\Users\User\Desktop\enproWeb\app\templates\admin\product_edit.html -->
+{% extends "base.html" %}
+{% block title %}{{ title }} - enpro{% endblock %}
+
+{% block content %}
+<section class="admin-product-edit py-5">
+    <div class="container">
+        <h2 class="section-title text-center mb-4 fade-in">{{ title }}</h2>
+
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }} alert-dismissible fade show mt-3 animate__animated animate__fadeIn" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <!-- Product Form -->
+        <div class="card shadow fade-in">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">{{ 'Edit Product' if product else 'Add New Product' }}</h5>
+            </div>
+            <div class="card-body">
+                <form method="POST" action="" enctype="multipart/form-data">
+                    {{ form.hidden_tag() }}
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            {{ form.name.label(class="form-label") }}
+                            {{ form.name(class="form-control") }}
+                            {% for error in form.name.errors %}
+                                <span class="text-danger">{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            {{ form.source.label(class="form-label") }}
+                            {{ form.source(class="form-select") }}
+                            {% for error in form.source.errors %}
+                                <span class="text-danger">{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        {{ form.description.label(class="form-label") }}
+                        {{ form.description(class="form-control", rows=4) }}
+                        {% for error in form.description.errors %}
+                            <span class="text-danger">{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            {{ form.image_file.label(class="form-label") }}
+                            {{ form.image_file(class="form-control") }}
+                            {% for error in form.image_file.errors %}
+                                <span class="text-danger">{{ error }}</span>
+                            {% endfor %}
+                            {% if product and product.image_url %}
+                                <img src="{{ product.image_url }}" alt="Current Image" class="img-fluid mt-2" style="max-width: 100px; max-height: 100px; object-fit: cover;">
+                                <div class="form-check mt-2">
+                                    <input type="checkbox" name="remove_image" id="remove_image" class="form-check-input">
+                                    <label for="remove_image" class="form-check-label">Remove current image</label>
+                                </div>
+                            {% elif product %}
+                                <img src="/assets/img/icon/placeholder.png" alt="No Image" class="img-fluid mt-2" style="max-width: 100px; max-height: 100px; object-fit: cover;">
+                            {% endif %}
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            {{ form.manufacturer_url.label(class="form-label") }}
+                            {{ form.manufacturer_url(class="form-control") }}
+                            {% for error in form.manufacturer_url.errors %}
+                                <span class="text-danger">{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        {{ form.category_id.label(class="form-label") }}
+                        {{ form.category_id(class="form-select") }}
+                        {% for error in form.category_id.errors %}
+                            <span class="text-danger">{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        {{ form.submit(class="btn btn-primary") }}
+                        <a href="{{ url_for('admin.products') }}" class="btn btn-outline-secondary">Back to Products</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block styles %}
+    <style>
+        .form-label {
+            font-weight: 500;
+        }
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .img-fluid {
+            max-height: 100px;
+        }
+    </style>
+{% endblock %}

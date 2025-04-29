@@ -1,0 +1,259 @@
+{% extends "base.html" %}
+{% block title %}Enpro - Home{% endblock %}
+
+{% block content %}
+    <!-- Hero Section -->
+    <section class="hero-area" data-background="{{ url_for('static', filename='img/hero/pexels-artempodrez-5726810.jpg') }}">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 text-center text-lg-start wow fadeInLeft" data-wow-delay="0.2s">
+                    <h1 class="hero-title">We Equip, You Conquer</h1>
+                    <p class="lead fw-bold text-primary bg-light bg-opacity-75 p-2 rounded wow fadeInUp" data-wow-delay="0.4s">
+                        Authorised Distributors of Mascot Workwear & Petzl Safety Solutions Across Africa
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Us Section -->
+    <section class="about-section py-5">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 wow fadeInLeft" data-wow-delay="0.2s">
+                    <h2 class="section-title mb-4">Discover Enpro</h2>
+                    <p>We specialise in the distribution of premium safety workwear and protective accessories, sourced exclusively from trusted, certified manufacturers such as Mascot International and Petzl International. Our extensive product range is designed to meet the diverse needs of various industrial sectors, delivering exceptional protection, long-lasting durability, and all-day comfort, ensuring your workforce stays safe, confident, and ready for any challenge.</p>
+                    <p>Our team provides expert guidance in selecting the most suitable protective workwear and accessories tailored to your specific industry requirements. Whether you're launching a new operation or enhancing existing safety standards, we deliver customised recommendations to ensure compliance and optimal protection for your workforce.<p>
+                    <a href="{{ url_for('main.about') }}" class="btn btn-outline-primary">Learn More</a>
+                </div>
+                <div class="col-lg-6 wow fadeInRight" data-wow-delay="0.4s">
+                    <img src="{{ url_for('static', filename='img/about/pexels-pixabay-209230.jpg') }}" class="img-fluid rounded" alt="About Enpro">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services-section py-5 bg-light">
+        <div class="container">
+            <h2 class="section-title text-center mb-4 wow fadeInUp">Our Services</h2>
+            <div class="row">
+                <div class="col-md-6 col-lg-3 mb-4 wow fadeInUp" data-wow-delay="0.2s">
+                    <div class="card h-100 shadow-sm text-center">
+                        <div class="card-body">
+                            <img src="{{ url_for('static', filename='img/about/protective.jpg') }}?t={{ current_time }}"
+                                 class="mb-3" alt="Protective Workwear" style="height: 200px; object-fit: cover;">
+                            <!-- Debug: Display service image path -->
+
+                            <h5 class="card-title">Supply of Certified Protective Workwear & Accessories</h5>
+                            <p class="card-text">Distributing high-quality safety workwear and accessories from Mascot and Petzl.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 mb-4 wow fadeInUp" data-wow-delay="0.4s">
+                    <div class="card h-100 shadow-sm text-center">
+                        <div class="card-body">
+                            <img src="{{ url_for('static', filename='img/about/protect.jpg') }}?t={{ current_time }}"
+                                 class="mb-3" alt="Safety Consultations" style="height: 200px; object-fit: cover;">
+                            <!-- Debug: Display service image path -->
+
+                            <h5 class="card-title">Professional Consultations on Safety Solutions</h5>
+                            <p class="card-text">Expert guidance on selecting protective workwear for industry needs.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 mb-4 wow fadeInUp" data-wow-delay="0.6s">
+                    <div class="card h-100 shadow-sm text-center">
+                        <div class="card-body">
+                            <img src="{{ url_for('static', filename='img/about/container-6751623_640.jpg') }}?t={{ current_time }}"
+                                 class="mb-3" alt="Export Support" style="height: 200px; object-fit: cover;">
+                            <!-- Debug: Display service image path -->
+
+                            <h5 class="card-title">Export Support Across Africa</h5>
+                            <p class="card-text">Assisting with seamless export procedures across Africa.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 mb-4 wow fadeInUp" data-wow-delay="0.8s">
+                    <div class="card h-100 shadow-sm text-center">
+                        <div class="card-body">
+                            <img src="{{ url_for('static', filename='img/about/Custom-clearance-completed.jpg') }}?t={{ current_time }}"
+                                 class="mb-3" alt="Customs Clearance" style="height: 200px; object-fit: cover;">
+                            <!-- Debug: Display service image path -->
+
+                            <h5 class="card-title">Customs Clearance & Doorstep Delivery</h5>
+                            <p class="card-text">Managing customs clearance and doorstep delivery in Kenya.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Products Section -->
+    <section class="product-section py-5">
+        <div class="container">
+            <h2 class="section-title text-center mb-4 wow fadeInUp">Featured Products</h2>
+            <div class="row">
+                {% for product in products %}
+                    <div class="col-md-3 col-sm-6 mb-4 wow fadeInUp" data-wow-delay="{{ loop.index0 * 0.2 }}s">
+                        <div class="card h-100 shadow-sm">
+                            <!-- Product image fetched from static/img/products or fallback to placeholder -->
+                            <img src="{% if product.image_url %}{{ url_for('static', filename='img/products/' + product.image_url) }}?t={{ current_time }}{% else %}{{ url_for('static', filename='img/icon/placeholder.png') }}{% endif %}"
+                                 class="card-img-top" alt="{{ product.name | safe }}" style="max-height: 150px; object-fit: cover;">
+                            <!-- Debug: Display image_url for troubleshooting -->
+                            <p class="text-muted small text-center">Image: {{ product.image_url | default('None') }}</p>
+                            <div class="card-body text-center">
+                                <h5 class="card-title">{{ product.name }}</h5>
+                                <p class="card-text text-muted">{{ product.source | capitalize }}</p>
+                                <a href="{{ product.manufacturer_url }}"
+                                   class="btn btn-outline-primary" target="_blank">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="col-12 text-center">
+                        <p>No featured products available.</p>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="text-center mt-4">
+                <a href="{{ url_for('main.products') }}" class="btn btn-primary">See All Products</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials-section py-5">
+        <div class="container">
+            <h2 class="section-title text-center mb-4 wow fadeInUp">What Our Clients Say</h2>
+            <div class="row">
+                <div class="col-md-4 mb-4 wow fadeInUp" data-wow-delay="0.2s">
+                    <div class="card h-100 shadow-sm text-center">
+                        <div class="card-body">
+                            <p class="card-text">"Enpro provided us with top-notch safety gear that transformed our workplace safety standards."</p>
+                            <h6 class="card-title mt-3">Sarah K.</h6>
+                            <p class="card-text text-muted">Construction Manager</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4 wow fadeInUp" data-wow-delay="0.4s">
+                    <div class="card h-100 shadow-sm text-center">
+                        <div class="card-body">
+                            <p class="card-text">"Their workwear is durable and comfortable. The team was very responsive to our needs."</p>
+                            <h6 class="card-title mt-3">James M.</h6>
+                            <p class="card-text text-muted">Factory Supervisor</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4 wow fadeInUp" data-wow-delay="0.6s">
+                    <div class="card h-100 shadow-sm text-center">
+                        <div class="card-body">
+                            <p class="card-text">"Fast delivery and excellent customer service. Highly recommend Enpro!"</p>
+                            <h6 class="card-title mt-3">Emily R.</h6>
+                            <p class="card-text text-muted">Procurement Officer</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Latest News Section -->
+    <section class="blog-section py-5 bg-light">
+        <div class="container">
+            <h2 class="section-title text-center mb-4 wow fadeInUp">Latest News</h2>
+            <div class="row">
+                {% for post in posts %}
+                    <div class="col-md-4 col-sm-6 mb-4 wow fadeInUp" data-wow-delay="{{ loop.index0 * 0.2 }}s">
+                        <div class="card h-100 shadow-sm">
+                            <img src="{% if post.images %}{{ url_for('static', filename='img/blog/' + post.images[0].image_url) }}{% else %}{{ url_for('static', filename='img/icon/placeholder.png') }}{% endif %}"
+                                 class="card-img-top" alt="{% if post.images and post.images[0].alt_text %}{{ post.images[0].alt_text }}{% else %}{{ post.title }}{% endif %}">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ post.title }}</h5>
+                                <p class="card-text">{{ post.content | truncate(100, true) }}...</p>
+                                <a href="{{ url_for('main.blog_details', slug=post.slug) }}"
+                                   class="btn btn-outline-primary">Read More</a>
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="col-12 text-center">
+                        <p>No recent posts available.</p>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="text-center mt-4">
+                <a href="{{ url_for('main.blog') }}" class="btn btn-primary">View All Posts</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Us Section -->
+    <section class="contact-section py-5">
+        <div class="container">
+            <h2 class="section-title text-center mb-4 wow fadeInUp">Contact Us</h2>
+            <div class="row">
+                <div class="col-lg-6 mb-4 wow fadeInLeft" data-wow-delay="0.2s">
+                    <form method="POST" action="{{ url_for('main.contact') }}" class="contact-form">
+                        <!-- CSRF Token -->
+                        {{ form.hidden_tag() }}
+
+                        <div class="mb-3">
+                            <label for="name" class="form-label">{{ form.name.label }}</label>
+                            {{ form.name(class="form-control", id="name", placeholder="Your Name") }}
+                            {% if form.name.errors %}
+                                <div class="text-danger">
+                                    {% for error in form.name.errors %}{{ error }}<br>{% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="email" class="form-label">{{ form.email.label }}</label>
+                            {{ form.email(class="form-control", id="email", placeholder="Your Email") }}
+                            {% if form.email.errors %}
+                                <div class="text-danger">
+                                    {% for error in form.email.errors %}{{ error }}<br>{% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="message" class="form-label">{{ form.message.label }}</label>
+                            {{ form.message(class="form-control", rows="5", id="message", placeholder="Your Message") }}
+                            {% if form.message.errors %}
+                                <div class="text-danger">
+                                    {% for error in form.message.errors %}{{ error }}<br>{% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">{{ form.submit.label.text }}</button>
+                    </form>
+                </div>
+
+                <div class="col-lg-6 wow fadeInRight" data-wow-delay="0.4s">
+                    <h5>Contact Details</h5>
+                    <p><i class="fas fa-map-marker-alt me-2"></i> Mbandu Complex, off Langata road, Near Galleria Mall, 4th Floor, room NO.5</p>
+                    <p><i class="fas fa-phone-alt me-2"></i> +254716259317 / +254723474767</p>
+                    <p><i class="fas fa-envelope me-2"></i> info@enpro.co.ke</p>
+                    <div class="mt-4">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.743379300845!2d36.86660071475318!3d-1.333047799048093!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x182f10e1f097a5cb%3A0x4c3d1f8f7c4b7b3e!2sMbandu%20Complex!5e0!3m2!1sen!2ske!4v1698765432109" width="100%" height="250" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        $(document).ready(function() {
+            // Apply background image from data-background attribute
+            const heroSection = $('.hero-area');
+            const bgUrl = heroSection.data('background');
+            heroSection.css('background-image', `url('${bgUrl}')`);
+        });
+    </script>
+{% endblock %}

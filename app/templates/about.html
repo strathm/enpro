@@ -1,0 +1,381 @@
+{% extends "base.html" %}
+{% block title %}Enpro Ltd - About Us{% endblock %}
+
+{% block content %}
+<style>
+    /* Custom styles inspired by The Star, Tuko, and Enpro */
+    body {
+        font-family: 'Roboto', sans-serif;
+        color: #333;
+        background-color: #f8f9fa; /* Enpro light gray */
+    }
+    .about-page {
+        padding-top: 70px; /* Clear fixed navbar (desktop) */
+    }
+    @media (max-width: 768px) {
+        .about-page {
+            padding-top: 90px; /* Clear fixed navbar (mobile) */
+        }
+    }
+    .section-title {
+        font-size: 2.25rem;
+        font-weight: 700;
+        color: #003087; /* Enpro dark blue */
+        margin-bottom: 1.25rem;
+    }
+    .card {
+        border: none;
+        border-radius: 8px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    }
+    .overview-img {
+        max-height: 350px;
+        object-fit: cover;
+        border-radius: 8px;
+        width: 100%;
+        overflow: hidden;
+    }
+    .team-img {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        border-radius: 50%;
+        border: 2px solid #f1f1f1;
+    }
+    .partner-img {
+        max-height: 70px;
+        object-fit: contain;
+        margin: 0.75rem auto;
+    }
+    .card-img {
+        width: 40px;
+        height: 40px;
+        object-fit: cover;
+        margin: 0.75rem auto;
+    }
+    .btn-primary {
+        background-color: #003087;
+        border-color: #003087;
+        padding: 0.5rem 1.25rem;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+    }
+    .btn-primary:hover {
+        background-color: #005bb5; /* Enpro teal */
+        border-color: #005bb5;
+    }
+    .cta-section {
+        background-color: #f8f9fa; /* Enpro light gray */
+        padding: 2.5rem 0;
+        border-radius: 8px;
+    }
+    .text-muted {
+        color: #666 !important;
+    }
+    .breadcrumb {
+        background-color: transparent;
+        padding: 0.25rem 0;
+    }
+    .breadcrumb-item a {
+        color: #003087;
+        text-decoration: none;
+    }
+    .breadcrumb-item a:hover {
+        color: #005bb5;
+    }
+    section {
+        margin-bottom: 1.5rem; /* Reduced section separation */
+    }
+    .container {
+        max-width: 1140px; /* Tighter container */
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+    .card-body {
+        padding: 1rem; /* Compact card padding */
+    }
+    @media (max-width: 768px) {
+        .section-title {
+            font-size: 1.75rem;
+        }
+        .overview-img {
+            max-height: 250px;
+            margin-bottom: 0.75rem;
+        }
+        .card {
+            margin-bottom: 1rem;
+        }
+        .container {
+            padding-left: 0.75rem;
+            padding-right: 0.75rem;
+        }
+    }
+</style>
+
+<!-- About Us Page Wrapper -->
+<div class="about-page">
+    <!-- About Hero Section -->
+    <section class="about-hero py-4 bg-light">
+        <div class="container text-center">
+            <h1 class="section-title wow fadeInUp">About Enpro Ltd</h1>
+            <p class="lead text-muted wow fadeInUp" data-wow-delay="0.2s">
+                Empowering businesses with premium workwear, safety gear, and strategic solutions across Africa.
+            </p>
+        </div>
+    </section>
+
+    <!-- Breadcrumbs -->
+    <section class="breadcrumbs py-1">
+        <div class="container">
+            <nav aria-label="breadcrumb" class="wow fadeInUp">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ url_for('main.index') }}">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">About Us</li>
+                </ol>
+            </nav>
+        </div>
+    </section>
+
+    <!-- Company Overview Section -->
+    <section class="about-overview py-4">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 wow fadeInLeft" data-wow-delay="0.2s">
+                    <h2 class="section-title mb-3">Who We Are</h2>
+                    <p>We specialise in the distribution of premium safety workwear and protective accessories, sourced exclusively from trusted, certified manufacturers such as Mascot International and Petzl International. Our extensive product range is designed to meet the diverse needs of various industrial sectors, delivering exceptional protection, long-lasting durability, and all-day comfort, ensuring your workforce stays safe, confident, and ready for any challenge.</p>
+                    <p>Our team provides expert guidance in selecting the most suitable protective workwear and accessories tailored to your specific industry requirements. Whether you're launching a new operation or enhancing existing safety standards, we deliver customised recommendations to ensure compliance and optimal protection for your workforce.</p>
+                    <p>We support companies across Africa with streamlined export solutions, managing everything from documentation to shipping logistics. Our experienced team ensures your safety gear reaches its destination efficiently and in full compliance with both international and local regulations.</p>
+                    <p>Enpro Limited handles the complete customs clearance process, offering a seamless, stress-free experience for our clients across Kenya. We prioritize swift processing and coordinate prompt, reliable delivery directly to your location.</p>
+                </div>
+                <div class="col-lg-6 wow fadeInRight" data-wow-delay="0.4s">
+                    <img src="{{ url_for('static', filename='img/about/pexels-pixabay-209230.jpg') }}" class="overview-img" alt="Enpro Ltd Overview">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Enpro Section -->
+    <section class="why-choose py-4 bg-white">
+        <div class="container">
+            <h2 class="section-title text-center mb-4 wow fadeInUp">Why Choose Enpro Limited?</h2>
+            <div class="row">
+                <div class="col-md-4 mb-3 wow fadeInUp" data-wow-delay="0.2s">
+                    <div class="card h-100 shadow-sm text-center">
+                        <div class="card-body">
+
+                            <h5 class="card-title">Expertise Built Over Nearly a Decade</h5>
+                            <p class="card-text">With close to ten years of hands-on experience in the safety wear and logistics industry, Enpro Limited has developed deep expertise and a reliable network that ensures clients receive tailored, professional service and goods every time.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3 wow fadeInUp" data-wow-delay="0.4s">
+                    <div class="card h-100 shadow-sm text-center">
+                        <div class="card-body">
+
+                            <h5 class="card-title">Certified Products from Global Manufacturers</h5>
+                            <p class="card-text">Our protective workwear and accessories are sourced from globally recognized manufacturers—Mascot International and Petzl International. All our products are rigorously tested and certified to meet or exceed international and industry-specific safety standards.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3 wow fadeInUp" data-wow-delay="0.6s">
+                    <div class="card h-100 shadow-sm text-center">
+                        <div class="card-body">
+
+                            <h5 class="card-title">Seamless Export Support Across Africa</h5>
+                            <p class="card-text">We don’t just supply—we support. By handling export procedures for our clients, we reduce the risks and challenges associated with individual exporting. Our structured approach ensures all documentation and compliance steps are managed effectively, giving our clients peace of mind.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3 wow fadeInUp" data-wow-delay="0.2s">
+                    <div class="card h-100 shadow-sm text-center">
+                        <div class="card-body">
+
+                            <h5 class="card-title">Full Customs Clearance & Efficient Doorstep Delivery</h5>
+                            <p class="card-text">For our local Kenyan clients, Enpro Limited takes care of the entire clearance process, ensuring swift movement through customs and timely delivery directly to our clients’ locations.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3 wow fadeInUp" data-wow-delay="0.4s">
+                    <div class="card h-100 shadow-sm text-center">
+                        <div class="card-body">
+
+                            <h5 class="card-title">Tailored Consultations for Industry-Specific Safety Needs</h5>
+                            <p class="card-text">We understand that every industry has unique safety requirements. That’s why we offer personalized consultations to help clients choose the right protective gear that ensures compliance, comfort, and protection in their specific environments.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3 wow fadeInUp" data-wow-delay="0.6s">
+                    <div class="card h-100 shadow-sm text-center">
+                        <div class="card-body">
+
+                            <h5 class="card-title">Trusted by Leading Companies Across the Continent</h5>
+                            <p class="card-text">Our reputation is built on trust, consistency, and quality. Many of our clients are long-term partners who value our dedication to excellence and our commitment to safety.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Premium Products Section -->
+    <section class="premium-products py-4 bg-light">
+        <div class="container">
+            <h2 class="section-title text-center mb-4 wow fadeInUp">Premium Products For Every Industry</h2>
+            <div class="row">
+                <div class="col-lg-4 mb-3 wow fadeInUp" data-wow-delay="0.2s">
+                    <div class="card h-100 shadow-sm text-center">
+                        <div class="card-body">
+
+                            <h5 class="card-title">Versatile Workwear</h5>
+                            <p class="card-text">High-quality workwear tailored for every trade, from offices to warehouses, ensuring comfort and professionalism all day.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 mb-3 wow fadeInUp" data-wow-delay="0.4s">
+                    <div class="card h-100 shadow-sm text-center">
+                        <div class="card-body">
+
+                            <h5 class="card-title">Certified Safety Gear</h5>
+                            <p class="card-text">Certified safety wear to keep you protected, warm, dry, visible, and shielded in demanding environments.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 mb-3 wow fadeInUp" data-wow-delay="0.6s">
+                    <div class="card h-100 shadow-sm text-center">
+                        <div class="card-body">
+
+                            <h5 class="card-title">Durable Design</h5>
+                            <p class="card-text">Products rigorously tested for comfort, fit, and durability, engineered to withstand industrial washing and tough conditions.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Core Values Section -->
+    <section class="values-section py-4 bg-white">
+        <div class="container">
+            <h2 class="section-title text-center mb-4 wow fadeInUp">Our Core Values</h2>
+            <div class="row text-center">
+                <div class="col-md-4 mb-3 wow fadeInUp" data-wow-delay="0.2s">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">Quality</h5>
+                            <p class="card-text">We source only the best products from trusted brands to ensure reliability and performance.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3 wow fadeInUp" data-wow-delay="0.4s">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">Service</h5>
+                            <p class="card-text">Our team is dedicated to providing exceptional customer support and fast delivery.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3 wow fadeInUp" data-wow-delay="0.6s">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">Integrity</h5>
+                            <p class="card-text">We build trust through transparency, honesty, and a commitment to our customers.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="team-section py-4 bg-light">
+        <div class="container">
+            <h2 class="section-title text-center mb-4 wow fadeInUp">Meet Our Team</h2>
+            <div class="row">
+                <div class="col-md-4 mb-3 wow fadeInUp" data-wow-delay="0.2s">
+                    <div class="card h-100 shadow-sm text-center">
+                        <img src="{{ url_for('static', filename='img/team/team1.jpg') }}" class="team-img mx-auto mt-2" alt="Team Member">
+                        <div class="card-body">
+                            <h5 class="card-title">John Doe</h5>
+                            <p class="card-text text-muted">Founder & CEO</p>
+                            <p>Leading with a vision for safety and quality.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3 wow fadeInUp" data-wow-delay="0.4s">
+                    <div class="card h-100 shadow-sm text-center">
+                        <img src="{{ url_for('static', filename='img/team/team2.jpg') }}" class="team-img mx-auto mt-2" alt="Team Member">
+                        <div class="card-body">
+                            <h5 class="card-title">Jane Smith</h5>
+                            <p class="card-text text-muted">Sales Manager</p>
+                            <p>Ensuring customer satisfaction with every order.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3 wow fadeInUp" data-wow-delay="0.6s">
+                    <div class="card h-100 shadow-sm text-center">
+                        <img src="{{ url_for('static', filename='img/team/team3.jpg') }}" class="team-img mx-auto mt-2" alt="Team Member">
+                        <div class="card-body">
+                            <h5 class="card-title">Mike Johnson</h5>
+                            <p class="card-text text-muted">Logistics Head</p>
+                            <p>Delivering your products on time, every time.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Our Valued Partners Section -->
+    <section class="partners-section py-4 bg-white">
+        <div class="container">
+            <h2 class="section-title text-center mb-4 wow fadeInUp">Our Valued Partners</h2>
+            <div class="row align-items-center">
+                <div class="col-md-6 mb-3 wow fadeInUp" data-wow-delay="0.2s">
+                    <div class="card h-100 shadow-sm text-center">
+                        <a href="https://www.mascotworkwear.com/" target="_blank">
+                            <img src="{{ url_for('static', filename='img/partners/mascot-logo.png') }}" class="partner-img" alt="Mascot Logo">
+                        </a>
+                        <div class="card-body">
+                            <h5 class="card-title">Mascot Workwear</h5>
+                            <p class="card-text">World-class workwear known for durability, comfort, and innovative design, tailored for every industry.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-3 wow fadeInUp" data-wow-delay="0.4s">
+                    <div class="card h-100 shadow-sm text-center">
+                        <a href="https://www.petzl.com/" target="_blank">
+                            <img src="{{ url_for('static', filename='img/partners/petzl-logo.png') }}" class="partner-img" alt="Petzl Logo">
+                        </a>
+                        <div class="card-body">
+                            <h5 class="card-title">Petzl Safety Gear</h5>
+                            <p class="card-text">Industry-leading safety equipment, including helmets, harnesses, and headlamps, trusted for maximum protection.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action Section -->
+    <section class="cta-section py-3">
+        <div class="container text-center">
+            <h2 class="section-title wow fadeInUp">Ready to Gear Up?</h2>
+            <p class="text-muted mb-3 wow fadeInUp" data-wow-delay="0.2s">Explore our range of Mascot Workwear and Petzl products today!</p>
+            <a href="{{ url_for('main.products') }}" class="btn btn-primary wow fadeInUp" data-wow-delay="0.4s">Shop Now</a>
+        </div>
+    </section>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    $(document).ready(function() {
+        // Initialize Wow.js animations
+        new WOW().init();
+    });
+</script>
+{% endblock %}

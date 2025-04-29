@@ -1,0 +1,232 @@
+{% extends "base.html" %}
+{% block title %}Enpro - {{ post.title }}{% endblock %}
+
+{% block content %}
+<style>
+    /* Custom styles inspired by The Star, Tuko, and Enpro */
+    body {
+        font-family: 'Roboto', sans-serif;
+        color: #333;
+    }
+    .blog-details {
+        padding-top: 70px; /* Clear fixed navbar (desktop) */
+    }
+    @media (max-width: 768px) {
+        .blog-details {
+            padding-top: 90px; /* Clear fixed navbar (mobile) */
+        }
+    }
+    .section-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #003087; /* Enpro dark blue */
+        margin-bottom: 1rem;
+    }
+    .blog-img {
+        max-width: 800px;
+        width: 100%;
+        height: auto;
+        border-radius: 10px;
+        margin-bottom: 1rem;
+    }
+    .blog-content {
+        font-size: 1.1rem;
+        line-height: 1.8;
+        color: #444;
+    }
+    /* Enhanced styles for blog content */
+    .blog-content p {
+        margin-bottom: 1.75rem;
+        text-align: justify;
+    }
+    .blog-content h2 {
+        font-size: 1.8rem;
+        font-weight: 600;
+        color: #003087;
+        margin-top: 2.5rem;
+        margin-bottom: 1rem;
+    }
+    .blog-content h3 {
+        font-size: 1.5rem;
+        font-weight: 500;
+        color: #333;
+        margin-top: 2rem;
+        margin-bottom: 0.75rem;
+    }
+    .blog-content ul, .blog-content ol {
+        margin-bottom: 1.75rem;
+        padding-left: 2rem;
+    }
+    .blog-content ul li, .blog-content ol li {
+        margin-bottom: 0.75rem;
+    }
+    .blog-content blockquote {
+        border-left: 4px solid #003087;
+        padding: 1rem 1.5rem;
+        background-color: #f8f9fa;
+        margin: 1.75rem 0;
+        font-style: italic;
+        color: #555;
+    }
+    .blog-content a {
+        color: #003087;
+        text-decoration: none;
+    }
+    .blog-content a:hover {
+        text-decoration: underline;
+    }
+    .blog-content img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 8px;
+        margin: 1.5rem 0;
+    }
+    .meta-info {
+        font-size: 0.9rem;
+        color: #666;
+        margin-bottom: 1.5rem;
+    }
+    .card {
+        border: none;
+        border-radius: 10px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    }
+    .related-img {
+        max-height: 100px;
+        object-fit: cover;
+        border-radius: 10px 10px 0 0;
+    }
+    .card-title {
+        font-size: 1rem;
+        font-weight: 500;
+        margin-bottom: 0.75rem;
+    }
+    .card-title a {
+        color: #003087;
+        text-decoration: none;
+    }
+    .card-title a:hover {
+        text-decoration: underline;
+    }
+    .social-share a {
+        color: #fff;
+        background-color: #003087;
+        padding: 0.5rem 1rem;
+        border-radius: 5px;
+        margin-right: 0.5rem;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+    }
+    .social-share a:hover {
+        background-color: #005bb5; /* Lighter Enpro blue */
+    }
+    .sidebar {
+        background-color: #f8f9fa; /* Light gray, Enpro-inspired */
+        padding: 1.5rem;
+        border-radius: 10px;
+    }
+    .breadcrumb {
+        background-color: transparent;
+        padding: 0.5rem 0;
+    }
+    .breadcrumb-item a {
+        color: #003087;
+        text-decoration: none;
+    }
+    .breadcrumb-item a:hover {
+        text-decoration: underline;
+    }
+    .btn-primary {
+        background-color: #003087;
+        border-color: #003087;
+        border-radius: 5px;
+        padding: 0.75rem 1.5rem;
+    }
+    .btn-primary:hover {
+        background-color: #005bb5;
+        border-color: #005bb5;
+    }
+    @media (max-width: 768px) {
+        .section-title {
+            font-size: 2rem;
+        }
+        .sidebar {
+            margin-top: 2rem;
+        }
+    }
+</style>
+
+<!-- Blog Details Section -->
+<section class="blog-details py-5">
+    <div class="container">
+        <!-- Breadcrumbs -->
+        <nav aria-label="breadcrumb" class="wow fadeInUp">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ url_for('main.index') }}">Home</a></li>
+                <li class="breadcrumb-item"><a href="{{ url_for('main.blog') }}">News</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{{ post.title }}</li>
+            </ol>
+        </nav>
+
+        <div class="row">
+            <!-- Main Content -->
+            <div class="col-lg-8">
+                <h1 class="section-title wow fadeInUp">{{ post.title }}</h1>
+                <div class="meta-info wow fadeInUp" data-wow-delay="0.2s">
+                    <span>Published on {{ post.created_at.strftime('%B %d, %Y') }}</span>
+                </div>
+                {% for image in post.images %}
+                    <figure class="wow fadeInUp" data-wow-delay="0.4s">
+                        <img src="{{ url_for('static', filename='img/blog/' + image.image_url) }}"
+                             alt="{{ image.alt_text or post.title }}" class="blog-img">
+                        {% if image.alt_text %}
+                            <figcaption class="text-muted text-center">{{ image.alt_text }}</figcaption>
+                        {% endif %}
+                    </figure>
+                {% endfor %}
+                <div class="blog-content wow fadeInUp" data-wow-delay="0.6s">
+                    {{ post.content | safe }}
+                </div>
+                <!-- Social Sharing -->
+                <div class="social-share mt-4 wow fadeInUp" data-wow-delay="0.8s">
+                    <h5>Share this article:</h5>
+                    <a href="https://twitter.com/intent/tweet?url={{ url_for('main.blog_details', slug=post.slug, _external=True) }}&text={{ post.title }}" target="_blank"><i class="fab fa-twitter"></i> Twitter</a>
+                    <a href="https://www.facebook.com/sharer/sharer.php?u={{ url_for('main.blog_details', slug=post.slug, _external=True) }}" target="_blank"><i class="fab fa-facebook-f"></i> Facebook</a>
+                    <a href="https://www.linkedin.com/shareArticle?url={{ url_for('main.blog_details', slug=post.slug, _external=True) }}&title={{ post.title }}" target="_blank"><i class="fab fa-linkedin-in"></i> LinkedIn</a>
+                </div>
+            </div>
+            <!-- Sidebar -->
+            <div class="col-lg-4">
+                <div class="sidebar wow fadeInUp" data-wow-delay="0.2s">
+                    <h5 class="mb-4">Related Posts</h5>
+                    {% for related_post in related_posts|default([]) %}
+                        <div class="card mb-3">
+                            <img src="{% if related_post.images %}{{ url_for('static', filename='img/blog/' + related_post.images[0].image_url) }}{% else %}{{ url_for('static', filename='img/icon/placeholder.png') }}{% endif %}"
+                                 class="related-img" alt="{{ related_post.title }}">
+                            <div class="card-body">
+                                <h6 class="card-title"><a href="{{ url_for('main.blog_details', slug=related_post.slug) }}">{{ related_post.title }}</a></h6>
+                                <a href="{{ url_for('main.blog_details', slug=related_post.slug) }}" class="btn btn-primary btn-sm">Read More</a>
+                            </div>
+                        </div>
+                    {% else %}
+                        <p>No related posts available.</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    $(document).ready(function() {
+        // Initialize Wow.js animations
+        new WOW().init();
+    });
+</script>
+{% endblock %}

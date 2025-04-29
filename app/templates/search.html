@@ -1,0 +1,253 @@
+{% extends "base.html" %}
+{% block title %}{{ seo_title }}{% endblock %}
+
+{% block meta %}
+    <meta name="description" content="{{ seo_description }}">
+    <link rel="canonical" href="{{ url_for('main.search', q=query, _external=True) }}">
+    <script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "SearchResultsPage",
+        "name": "Search Results for '{{ query }}'",
+        "description": "{{ seo_description }}"
+    }
+    </script>
+{% endblock %}
+
+{% block content %}
+    <!-- Search Results Section -->
+    <section class="search-section py-5">
+        <div class="container">
+            <h2 class="section-title text-center mb-4 wow fadeInUp">Search Results for "{{ query }}"</h2>
+
+            <!-- Search Form -->
+            <form action="{{ url_for('main.search') }}" method="GET" class="d-flex mb-5 justify-content-center wow fadeInUp" data-wow-delay="0.2s">
+                <input type="search" name="q" class="form-control me-2" placeholder="Search products or blog posts..." aria-label="Search" value="{{ query }}" required style="max-width: 500px;">
+                <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i> Search</button>
+            </form>
+
+            <!-- Define Valid Categories for Mascot and Petzl -->
+            {% set valid_mascot_categories = [
+                'jackets', 'trousers', 'shirts', 't-shirts', 'polo-shirts', 
+                'sweatshirts', 'safety-footwear', 'accessories'
+            ] %}
+            {% set valid_petzl_categories = [
+                'helmets', 'harnesses', 'headlamps', 'lanyards', 
+                'carabiners', 'ropes'
+            ] %}
+
+            <!-- Define Category URLs for Mascot and Petzl -->
+            {% set mascot_category_urls = {
+                'jackets': 'https://www.mascotworkwear.com/en/products/jackets',
+                'trousers': 'https://www.mascotworkwear.com/en/products/trousers',
+                'shirts': 'https://www.mascotworkwear.com/en/products/shirts',
+                't-shirts': 'https://www.mascotworkwear.com/en/products/t-shirts',
+                'polo-shirts': 'https://www.mascotworkwear.com/en/products/polo-shirts',
+                'sweatshirts': 'https://www.mascotworkwear.com/en/products/sweatshirts',
+                'safety-footwear': 'https://www.mascotworkwear.com/en/products/safety-footwear',
+                'accessories': 'https://www.mascotworkwear.com/en/products/accessories'
+            } %}
+            {% set petzl_category_urls = {
+                'helmets': 'https://www.petzl.com/INT/en/Professional/Helmets',
+                'harnesses': 'https://www.petzl.com/INT/en/Professional/Harnesses',
+                'headlamps': 'https://www.petzl.com/INT/en/Professional/Headlamps',
+                'lanyards': 'https://www.petzl.com/INT/en/Professional/Lanyards-and-energy-absorbers',
+                'carabiners': 'https://www.petzl.com/INT/en/Professional/Connectors',
+                'ropes': 'https://www.petzl.com/INT/en/Professional/Ropes'
+            } %}
+
+            <!-- Products Section -->
+            <div class="mb-5">
+                <h3 class="mb-4 wow fadeInUp" data-wow-delay="0.3s">Products</h3>
+
+                <!-- Mascot Products -->
+                <h4 class="section-title wow fadeInUp" data-wow-delay="0.4s">Mascot Workwear</h4>
+                {% if mascot_products %}
+                    <div class="row">
+                        {% for product in mascot_products %}
+                            <div class="col-lg-3 col-md-6 col-sm-12 mb-4 wow fadeInUp" data-wow-delay="{{ loop.index0 * 0.2 }}s">
+                                <div class="card h-100 shadow-sm">
+                                    <img src="{% if product.image_url %}{{ url_for('static', filename='img/products/' + product.image_url) }}?t={{ current_time }}{% else %}{{ url_for('static', filename='img/icon/placeholder.png') }}{% endif %}"
+                                         class="card-img-top" alt="{{ product.name | safe }}" style="max-height: 150px; object-fit: cover;">
+                                    <p class="text-muted small text-center">Image: {{ product.image_url | default('None') }}</p>
+                                    <div class="card-body text-center">
+                                        <h5 class="card-title">{{ product.name }}</h5>
+                                        <p class="card-text text-muted">Mascot Collection</p>
+                                        <a href="{{ product.manufacturer_url }}" class="btn btn-outline-primary" target="_blank">View Details</a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p class="text-center text-muted wow fadeInUp" data-wow-delay="0.4s">No Mascot products found for "{{ query }}".</p>
+                {% endif %}
+                <!-- Link to Mascot category page if query matches a valid category -->
+                {% set detected_mascot_category = '' %}
+                {% for category in valid_mascot_categories %}
+                    {% if query | lower in category %}
+                        {% set detected_mascot_category = category %}
+                    {% endif %}
+                {% endfor %}
+                {% if detected_mascot_category %}
+                    <div class="text-center mt-3 wow fadeInUp">
+                        <a href="{{ mascot_category_urls[detected_mascot_category] }}" class="btn btn-primary" target="_blank">
+                            View More on Mascot
+                        </a>
+                    </div>
+                {% endif %}
+
+                <!-- Petzl Products -->
+                <h4 class="section-title wow fadeInUp" data-wow-delay="0.4s">Petzl Safety Gear</h4>
+                {% if petzl_products %}
+                    <div class="row">
+                        {% for product in petzl_products %}
+                            <div class="col-lg-3 col-md-6 col-sm-12 mb-4 wow fadeInUp" data-wow-delay="{{ loop.index0 * 0.2 }}s">
+                                <div class="card h-100 shadow-sm">
+                                    <img src="{% if product.image_url %}{{ url_for('static', filename='img/products/' + product.image_url) }}?t={{ current_time }}{% else %}{{ url_for('static', filename='img/icon/placeholder.png') }}{% endif %}"
+                                         class="card-img-top" alt="{{ product.name | safe }}" style="max-height: 150px; object-fit: cover;">
+                                    <p class="text-muted small text-center">Image: {{ product.image_url | default('None') }}</p>
+                                    <div class="card-body text-center">
+                                        <h5 class="card-title">{{ product.name }}</h5>
+                                        <p class="card-text text-muted">Petzl Collection</p>
+                                        <a href="{{ product.manufacturer_url }}" class="btn btn-outline-primary" target="_blank">View Details</a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p class="text-center text-muted wow fadeInUp" data-wow-delay="0.4s">No Petzl products found for "{{ query }}".</p>
+                {% endif %}
+                <!-- Link to Petzl category page if query matches a valid category -->
+                {% set detected_petzl_category = '' %}
+                {% for category in valid_petzl_categories %}
+                    {% if query | lower in category %}
+                        {% set detected_petzl_category = category %}
+                    {% endif %}
+                {% endfor %}
+                {% if detected_petzl_category %}
+                    <div class="text-center mt-3 wow fadeInUp">
+                        <a href="{{ petzl_category_urls[detected_petzl_category] }}" class="btn btn-primary" target="_blank">
+                            View More on Petzl
+                        </a>
+                    </div>
+                {% endif %}
+
+                <!-- Product Pagination -->
+                {% if products_pagination.has_prev or products_pagination.has_next %}
+                    <nav aria-label="Product pagination" class="mt-4">
+                        <ul class="pagination justify-content-center">
+                            {% if products_pagination.has_prev %}
+                                <li class="page-item">
+                                    <a class="page-link" href="{{ url_for('main.search', q=query, page=products_pagination.prev_num) }}">Previous</a>
+                                </li>
+                            {% else %}
+                                <li class="page-item disabled">
+                                    <span class="page-link">Previous</span>
+                                </li>
+                            {% endif %}
+                            {% for p in products_pagination.iter_pages() %}
+                                {% if p %}
+                                    {% if p == products_pagination.page %}
+                                        <li class="page-item active"><span class="page-link">{{ p }}</span></li>
+                                    {% else %}
+                                        <li class="page-item"><a class="page-link" href="{{ url_for('main.search', q=query, page=p) }}">{{ p }}</a></li>
+                                    {% endif %}
+                                {% else %}
+                                    <li class="page-item disabled"><span class="page-link">...</span></li>
+                                {% endif %}
+                            {% endfor %}
+                            {% if products_pagination.has_next %}
+                                <li class="page-item">
+                                    <a class="page-link" href="{{ url_for('main.search', q=query, page=products_pagination.next_num) }}">Next</a>
+                                </li>
+                            {% else %}
+                                <li class="page-item disabled">
+                                    <span class="page-link">Next</span>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </nav>
+                {% endif %}
+            </div>
+
+            <!-- Blog Posts Section -->
+            <div class="mb-5">
+                <h3 class="mb-4 wow fadeInUp" data-wow-delay="0.5s">Blog Posts</h3>
+                {% if posts %}
+                    <div class="row">
+                        {% for post in posts %}
+                            <div class="col-md-4 col-sm-6 mb-4 wow fadeInUp" data-wow-delay="{{ loop.index0 * 0.2 }}s">
+                                <div class="card h-100 shadow-sm">
+                                    <img src="{% if post.image_url %}{{ url_for('static', filename='img/blog/' + post.image_url) }}{% else %}{{ url_for('static', filename='img/icon/placeholder.png') }}{% endif %}" 
+                                         class="card-img-top" alt="{{ post.title }}" style="max-height: 150px; object-fit: cover;">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{ post.title }}</h5>
+                                        <p class="card-text">{{ post.content | truncate(100, true) }}...</p>
+                                        <a href="{{ url_for('main.blog_details', slug=post.slug) }}" class="btn btn-outline-primary">Read More</a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <!-- Blog Post Pagination -->
+                    {% if posts_pagination.has_prev or posts_pagination.has_next %}
+                        <nav aria-label="Blog post pagination" class="mt-4">
+                            <ul class="pagination justify-content-center">
+                                {% if posts_pagination.has_prev %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="{{ url_for('main.search', q=query, page=posts_pagination.prev_num) }}">Previous</a>
+                                    </li>
+                                {% else %}
+                                    <li class="page-item disabled">
+                                        <span class="page-link">Previous</span>
+                                    </li>
+                                {% endif %}
+                                {% for p in posts_pagination.iter_pages() %}
+                                    {% if p %}
+                                        {% if p == posts_pagination.page %}
+                                            <li class="page-item active"><span class="page-link">{{ p }}</span></li>
+                                        {% else %}
+                                            <li class="page-item"><a class="page-link" href="{{ url_for('main.search', q=query, page=p) }}">{{ p }}</a></li>
+                                        {% endif %}
+                                    {% else %}
+                                        <li class="page-item disabled"><span class="page-link">...</span></li>
+                                    {% endif %}
+                                {% endfor %}
+                                {% if posts_pagination.has_next %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="{{ url_for('main.search', q=query, page=posts_pagination.next_num) }}">Next</a>
+                                    </li>
+                                {% else %}
+                                    <li class="page-item disabled">
+                                        <span class="page-link">Next</span>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </nav>
+                    {% endif %}
+                {% else %}
+                    <p class="text-center text-muted wow fadeInUp" data-wow-delay="0.6s">No blog posts found for "{{ query }}".</p>
+                {% endif %}
+            </div>
+
+            <!-- No Results Message -->
+            {% if not mascot_products and not petzl_products and not posts %}
+                <div class="text-center wow fadeInUp" data-wow-delay="0.7s">
+                    <p class="text-muted">No results found for "{{ query }}". Try a different search term.</p>
+                    <a href="{{ url_for('main.index') }}" class="btn btn-primary mt-3">Back to Home</a>
+                </div>
+            {% endif %}
+        </div>
+    </section>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        $(document).ready(function() {
+            // Initialize Wow.js animations
+            new WOW().init();
+        });
+    </script>
+{% endblock %}

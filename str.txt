@@ -1,0 +1,115 @@
+C:\Users\User\Desktop\CapitalShopWeb\
+├───app/                          # Flask application directory
+│   ├───static/                   # Backend-specific static files (optional)
+│   │   ├───css/                  # Backend-specific CSS (if needed)
+│   │   ├───js/                   # Backend-specific JS (if needed)
+│   │   └───img/                  # Backend-specific images (if needed)
+│   ├───templates/                # Jinja2 templates (adapted from capitalshop/)
+│   │   ├───base.html             # Base template (derived from main.html)
+│   │   ├───index.html            # Home page
+│   │   ├───about.html            # About Us page (new or adapted from elements.html)
+│   │   ├───products.html         # Products listing page (adapted from categories.html)
+│   │   ├───pro-details.html      # Product details page (redirects to manufacturer)
+│   │   ├───blog.html             # Blog listing page
+│   │   ├───blog-details.html     # Blog post details page
+│   │   ├───contact.html          # Contact Us page
+│   │   ├───admin/                # Admin CMS templates
+│   │   │   ├───login.html        # Admin login page (adapted from login.html)
+│   │   │   └───dashboard.html    # Admin dashboard (new)
+│   │   ├───cart.html             # (Optional) Not used unless specified
+│   │   ├───checkout.html         # (Optional) Not used unless specified
+│   │   ├───elements.html         # (Optional) For UI testing if needed
+│   │   ├───register.html         # (Optional) For admin registration if needed
+│   ├───__init__.py               # Flask app initialization
+│   ├───routes.py                 # Route definitions
+│   ├───models.py                 # Database models (e.g., User, Product, BlogPost)
+│   ├───auth.py                   # Authentication logic
+│   ├───admin.py                  # Admin/CMS logic
+│   ├───products.py               # Product scraping/logic module
+│   └───assets/                   # Symlink or copy of capitalshop/assets/ (optional)
+│       ├───css/
+│       ├───fonts/
+│       ├───img/
+│       │   ├───blog/
+│       │   ├───elements/
+│       │   ├───gallery/
+│       │   ├───hero/
+│       │   ├───icon/
+│       │   ├───logo/
+│       │   └───post/
+│       ├───js/
+│       │   └───vendor/
+│       └───scss/
+├───instance/                     # Flask instance folder (for config & DB)
+│   └───capitalshop.db            # SQLite database file
+├───capitalshop/                  # Existing frontend template root
+│   ├───assets/                   # Frontend assets (served by Flask)
+│   │   ├───css/
+│   │   ├───fonts/
+│   │   ├───img/
+│   │   │   ├───blog/
+│   │   │   ├───elements/
+│   │   │   ├───gallery/
+│   │   │   ├───hero/
+│   │   │   ├───icon/
+│   │   │   ├───logo/
+│   │   │   └───post/
+│   │   ├───js/
+│   │   │   └───vendor/
+│   │   └───scss/
+│   ├───Doc/                      # Documentation folder
+│   │   ├───css/
+│   │   ├───fonts/
+│   │   ├───img/
+│   │   ├───js/
+│   │   └───syntax-highlighter/
+│   │       ├───scripts/
+│   │       └───styles/
+│   ├───blog-details.html         # Blog post details
+│   ├───blog.html                 # Blog listing
+│   ├───cart.html                 # Shopping cart (optional)
+│   ├───categories.html           # Product categories (used for products listing)
+│   ├───checkout.html             # Checkout page (optional)
+│   ├───contact.html              # Contact page
+│   ├───contact_process.php       # PHP contact form (replace with Flask logic)
+│   ├───elements.html             # UI elements (optional)
+│   ├───index.html                # Home page
+│   ├───login.html                # Login page (for admin)
+│   ├───main.html                 # Main template (used as base.html)
+│   ├───pro-details.html          # Product details page
+│   ├───readme.txt                # Template readme
+│   ├───register.html             # Registration page (optional)
+├───__MACOSX/                     # macOS metadata (can be ignored or deleted)
+│   └───capitalshop/
+│       ├───assets/
+│       │   ├───css/
+│       │   ├───fonts/
+│       │   ├───img/
+│       │   │   ├───blog/
+│       │   │   ├───elements/
+│       │   │   ├───gallery/
+│       │   │   ├───hero/
+│       │   │   ├───icon/
+│       │   │   ├───logo/
+│       │   │   └───post/
+│       │   ├───js/
+│       │   │   └───vendor/
+│       │   └───scss/
+│       └───Doc/
+│           ├───css/
+│           ├───fonts/
+│           ├───img/
+│           ├───js/
+│           └───syntax-highlighter/
+│               ├───scripts/
+│               └───styles/
+├───config.py                     # Configuration settings
+├───requirements.txt              # Python dependencies
+└───run.py                        # Entry point to run the Flask app
+
+
+
+postgres=# CREATE DATABASE enpro
+postgres-# CREATE USER enpro_user WITH PASSWORD 'enpro_password'
+
+loading="lazy

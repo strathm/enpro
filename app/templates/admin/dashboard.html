@@ -1,0 +1,49 @@
+<!-- C:\Users\User\Desktop\enproWeb\app\templates\admin\dashboard.html -->
+{% extends "base.html" %}
+{% block title %}Admin Dashboard - enpro{% endblock %}
+
+{% block content %}
+<section class="admin-dashboard py-5">
+    <div class="container">
+        <h2 class="section-title fade-in">Admin Dashboard</h2>
+        <div class="row">
+            <div class="col-md-4 mb-4 fade-in">
+                <div class="card shadow">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Products ({{ product_count }})</h5>
+                        <p>Manage product listings.</p>
+                        <a href="{{ url_for('admin.products') }}" class="btn btn-outline-primary">Go to Products</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4 fade-in">
+                <div class="card shadow">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Blog Posts ({{ blog_count }})</h5>
+                        <p>Create, edit, or delete blog content.</p>
+                        <a href="{{ url_for('admin.blog') }}" class="btn btn-outline-primary">Manage Blog</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4 fade-in">
+                <div class="card shadow">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">New Messages ({{ contact_count }})</h5>
+                        <p>View and resolve submissions.</p>
+                        <a href="{{ url_for('admin.contacts') }}" class="btn btn-outline-primary">Go to Messages</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4 fade-in">
+                <div class="card shadow">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Logout</h5>
+                        <p>End your admin session.</p>
+                        <a href="{{ url_for('auth.logout') }}" class="btn btn-outline-danger">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

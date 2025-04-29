@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% block title %}enpro - Latest{% endblock %}
+
+{% block content %}
+    <!-- Blog Hero Section -->
+    <section class="blog-hero" data-background="{{ url_for('static', filename='img/hero/blog-bg.jpg') }}">
+        <div class="hero-overlay">
+            <div class="container text-center">
+                <h1 class="hero-title fade-in-up">Our Latest</h1>
+                <p class="hero-subtitle fade-in-up delay-02">
+                    Stay Updated with the Latest News and Tips on Workwear and Safety Gear
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Latest News Section -->
+    <section class="blog-section">
+        <div class="container">
+            <h2 class="section-title fade-in">Latest Posts</h2>
+            {% if posts %}
+                <div class="row">
+                    {% for post in posts %}
+                        <div class="col-md-4 col-sm-6 mb-4 fade-in delay-{{ loop.index0 * 0.2 }}">
+                            <div class="card blog-card">
+                                <img src="{% if post.images %}{{ url_for('static', filename='img/blog/' + post.images[0].image_url) }}{% else %}{{ url_for('static', filename='img/icon/placeholder.png') }}{% endif %}" 
+                                     class="card-img-top" alt="{% if post.images and post.images[0].alt_text %}{{ post.images[0].alt_text }}{% else %}{{ post.title }}{% endif %}">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ post.title }}</h5>
+                                    <p class="card-text">{{ post.content | truncate(100, true) }}...</p>
+                                    <a href="{{ url_for('main.blog_details', slug=post.slug) }}" 
+                                       class="btn btn-outline-primary">Read More</a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p class="text-center fade-in">No Latest News available at this time.</p>
+            {% endif %}
+            <div class="text-center mt-4 fade-in delay-04">
+                <a href="{{ url_for('main.blog') }}" class="btn btn-primary">Load More Posts</a>
+            </div>
+        </div>
+    </section>
+
+   '
+
+    <!-- Call to Action -->
+    <section class="cta-section">
+        <div class="container text-center">
+            <h2 class="section-title fade-in">Need Gear?</h2>
+            <p class="fade-in delay-02">Check out our range of Mascot Workwear and Petzl products!</p>
+            <a href="{{ url_for('main.products') }}" class="btn btn-primary fade-in-up delay-04">Shop Now</a>
+        </div>
+    </section>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        $(document).ready(function() {
+            // Apply background image from data-background attribute
+            const blogHero = $('.blog-hero');
+            const bgUrl = blogHero.data('background');
+            blogHero.css('background-image', `url('${bgUrl}')`);
+
+            // Blog card hover effects
+            const blogCards = $('.blog-card');
+            blogCards.on('mouseenter', function() {
+                $(this).css({
+                    'transform': 'translateY(-10px)',
+                    'transition': 'transform 0.3s ease',
+                    'box-shadow': '0 8px 16px rgba(0, 0, 0, 0.2)'
+                });
+            });
+            blogCards.on('mouseleave', function() {
+                $(this).css({
+                    'transform': 'translateY(0)',
+                    'box-shadow': '0 4px 8px rgba(0, 0, 0, 0.1)'
+                });
+            });
+        });
+    </script>
+{% endblock %}

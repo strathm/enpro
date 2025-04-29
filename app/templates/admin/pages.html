@@ -1,0 +1,126 @@
+<!-- C:\Users\User\Desktop\enproWeb\app\templates\admin\pages.html -->
+{% extends "base.html" %}
+{% block title %}Manage Static Pages - enpro{% endblock %}
+
+{% block content %}
+<section class="admin-pages py-5">
+    <div class="container">
+        <h2 class="section-title text-center mb-4 fade-in">Manage Static Pages</h2>
+
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }} alert-dismissible fade show mt-3 animate__animated animate__fadeIn" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <!-- Add New Page Form -->
+        <div class="card shadow mb-5 fade-in">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">Add New Static Page</h5>
+            </div>
+            <div class="card-body">
+                <form method="POST" action="{{ url_for('admin.page_new') }}">
+                    {{ form.hidden_tag() }}
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            {{ form.title.label(class="form-label") }}
+                            {{ form.title(class="form-control") }}
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            {{ form.slug.label(class="form-label") }}
+                            {{ form.slug(class="form-control") }}
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        {{ form.content.label(class="form-label") }}
+                        {{ form.content(class="form-control", rows="5") }}
+                    </div>
+                    <div class="mb-3">
+                        {{ form.is_published.label(class="form-label") }}
+                        {{ form.is_published(class="form-check-input mt-2") }}
+                    </div>
+                    <div class="d-grid">
+                        {{ form.submit(class="btn btn-primary") }}
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Page List -->
+        <div class="card shadow fade-in">
+            <div class="card-header bg-secondary text-white">
+                <h5 class="mb-0">Static Page List</h5>
+            </div>
+            <div class="card-body">
+                {% if pages %}
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Slug</th>
+                                    <th>Published</th>
+                                    <th>Content Preview</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for page in pages %}
+                                    <tr>
+                                        <td>{{ page.title }}</td>
+                                        <td>{{ page.slug }}</td>
+                                        <td>{{ 'Yes' if page.is_published else 'No' }}</td>
+                                        <td>{{ page.content | truncate(50, True) }}</td>
+                                        <td>
+                                            <a href="{{ url_for('main.page', slug=page.slug) }}" class="btn btn-sm btn-info me-2" target="_blank">
+                                                <i class="fas fa-eye"></i> View
+                                            </a>
+                                            <a href="{{ url_for('admin.page_edit', id=page.id) }}" class="btn btn-sm btn-warning me-2">
+                                                <i class="fas fa-edit"></i> Edit
+                                            </a>
+                                            <form action="{{ url_for('admin.page_delete', id=page.id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete {{ page.title }}?');">
+                                                {{ form.hidden_tag() }} <!-- CSRF token -->
+                                                <button type="submit" class="btn btn-sm btn-danger">
+                                                    <i class="fas fa-trash"></i> Delete
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% else %}
+                    <p class="text-muted text-center">No static pages found.</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Back to Dashboard -->
+        <div class="text-center mt-4 fade-in">
+            <a href="{{ url_for('admin.dashboard') }}" class="btn btn-outline-secondary">Back to Dashboard</a>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block styles %}
+    <style>
+        .table th, .table td {
+            vertical-align: middle;
+        }
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+{% endblock %}

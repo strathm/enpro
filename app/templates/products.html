@@ -1,0 +1,156 @@
+{% extends "base.html" %}
+{% block title %}Enpro - Products{% endblock %}
+
+{% block content %}
+    <!-- Products Hero Section -->
+    <section class="products-hero py-5 bg-light">
+        <div class="container text-center">
+            <h1 class="section-title wow fadeInUp">Our Products</h1>
+            <p class="lead text-muted wow fadeInUp" data-wow-delay="0.2s">
+                Explore Top-Quality Workwear and Safety Gear from Mascot and Petzl
+            </p>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="products-section py-5">
+        <div class="container">
+            <!-- Filter by Category -->
+            {% if categories %}
+                <div class="category-filter mb-5">
+                    <h2 class="section-title text-center wow fadeInUp">Filter by Category</h2>
+                    <div class="row text-center">
+                        {% for category in categories %}
+                            {% if category.name.lower() in valid_mascot_categories or category.name.lower() in valid_petzl_categories %}
+                                <div class="col-md-2 col-sm-4 mb-3 wow fadeInUp" data-wow-delay="{{ loop.index0 * 0.2 }}s">
+                                    <a href="{{ url_for('main.products', category=category.name | lower) }}" class="btn btn-outline-primary w-100">
+                                        {{ category.name }}
+                                    </a>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    <!-- Search Form -->
+                    <form action="{{ url_for('main.search') }}" method="GET" class="d-flex mt-3 wow fadeInUp" data-wow-delay="0.8s">
+                        <input type="search" name="q" class="form-control me-2" placeholder="Search products..." aria-label="Search" required>
+                        <button type="submit" class="btn btn-outline-primary"><i class="fas fa-search"></i></button>
+                    </form>
+                </div>
+            {% endif %}
+
+            <!-- Define Valid Categories for Mascot and Petzl -->
+            {% set valid_mascot_categories = [
+                'jackets', 'trousers', 'shirts', 't-shirts', 'polo-shirts',
+                'sweatshirts', 'safety-footwear', 'accessories'
+            ] %}
+            {% set valid_petzl_categories = [
+                'helmets', 'harnesses', 'headlamps', 'lanyards',
+                'carabiners', 'ropes'
+            ] %}
+
+            <!-- Define Category URLs for Mascot and Petzl -->
+            {% set mascot_category_urls = {
+                'jackets': 'https://www.mascotworkwear.com/en/jackets?_gl=1*f2jeck*_up*MQ..*_ga*MTA1NDIxOTgxOS4xNzQ1NjExNzI5*_ga_XTYLSF6346*MTc0NTYxMTcyOS4xLjAuMTc0NTYxMTcyOS4wLjAuNzA5NjEyNjYx',
+                'trousers': 'https://www.mascotworkwear.com/en/trousers?_gl=1*oy9zv3*_up*MQ..*_ga*MTA1NDIxOTgxOS4xNzQ1NjExNzI5*_ga_XTYLSF6346*MTc0NTYxMTcyOS4xLjAuMTc0NTYxMTczMi4wLjAuNzA5NjEyNjYx',
+                'shirts': 'https://www.mascotworkwear.com/en/shirts?_gl=1*la814m*_up*MQ..*_ga*MTA1NDIxOTgxOS4xNzQ1NjExNzI5*_ga_XTYLSF6346*MTc0NTYxMTcyOS4xLjAuMTc0NTYxMTc3MC4wLjAuNzA5NjEyNjYx',
+                't-shirts': 'https://www.mascotworkwear.com/en/t-shirts?_gl=1*1fk1pcr*_up*MQ..*_ga*MTA1NDIxOTgxOS4xNzQ1NjExNzI5*_ga_XTYLSF6346*MTc0NTYxMTcyOS4xLjAuMTc0NTYxMTc5OC4wLjAuNzA5NjEyNjYx',
+                'polo-shirts': 'https://www.mascotworkwear.com/en/polo-shirts?_gl=1*1ku7puw*_up*MQ..*_ga*MTA1NDIxOTgxOS4xNzQ1NjExNzI5*_ga_XTYLSF6346*MTc0NTYxMTcyOS4xLjAuMTc0NTYxMTgzMi4wLjAuNzA5NjEyNjYx',
+                'Footwear': 'https://www.mascotworkwear.com/en/footwear?_gl=1*z2lofo*_up*MQ..*_ga*MTA1NDIxOTgxOS4xNzQ1NjExNzI5*_ga_XTYLSF6346*MTc0NTYxMTcyOS4xLjAuMTc0NTYxMjAzOC4wLjAuNzA5NjEyNjYx',
+                'Safety clothing': 'https://www.mascotworkwear.com/en/safety-clothing?_gl=1*1nxvliz*_up*MQ..*_ga*MTA1NDIxOTgxOS4xNzQ1NjExNzI5*_ga_XTYLSF6346*MTc0NTYxMTcyOS4xLjAuMTc0NTYxMTg1MS4wLjAuNzA5NjEyNjYx',
+                'accessories': 'https://www.mascotworkwear.com/en/accessories?_gl=1*1uszaet*_up*MQ..*_ga*MTA1NDIxOTgxOS4xNzQ1NjExNzI5*_ga_XTYLSF6346*MTc0NTYxMTcyOS4xLjAuMTc0NTYxMTk1My4wLjAuNzA5NjEyNjYx'
+            } %}
+            {% set petzl_category_urls = {
+                'helmets': 'https://www.petzl.com/INT/en/Professional/Helmets',
+                'harnesses': 'https://www.petzl.com/INT/en/Professional/Harnesses',
+                'headlamps': 'https://www.petzl.com/INT/en/Professional/Headlamps',
+                'lanyards': 'https://www.petzl.com/INT/en/Professional/Lanyards-and-energy-absorbers',
+                'carabiners': 'https://www.petzl.com/INT/en/Professional/Connectors',
+                'ropes': 'https://www.petzl.com/INT/en/Professional/Ropes'
+            } %}
+
+            <!-- Mascot Products -->
+            <h2 class="section-title wow fadeInUp">Mascot Workwear</h2>
+            {% if mascot_products %}
+                <div class="row">
+                    {% for product in mascot_products %}
+                        <div class="col-lg-3 col-md-6 col-sm-12 mb-4 wow fadeInUp" data-wow-delay="{{ loop.index0 * 0.2 }}s">
+                            <div class="card h-100 shadow-sm">
+                                <img src="{% if product.image_url %}{{ url_for('static', filename='img/products/' + product.image_url) }}?t={{ current_time }}{% else %}{{ url_for('static', filename='img/icon/placeholder.png') }}{% endif %}"
+                                     class="card-img-top" alt="{{ product.name | safe }}" style="max-height: 150px; object-fit: cover;">
+                                <p class="text-muted small text-center">Image: {{ product.image_url | default('None') }}</p>
+                                <div class="card-body text-center">
+                                    <h5 class="card-title">{{ product.name }}</h5>
+                                    <p class="card-text text-muted">Mascot Collection</p>
+                                    <a href="{{ product.manufacturer_url }}" class="btn btn-outline-primary" target="_blank">
+                                        View Details
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p class="text-center wow fadeInUp">No Mascot products available in this category.</p>
+            {% endif %}
+            <!-- Always show Mascot category link if the category is valid -->
+            {% if category in valid_mascot_categories %}
+                <div class="text-center mt-3 wow fadeInUp">
+                    <a href="{{ mascot_category_urls[category] }}" class="btn btn-primary" target="_blank">
+                        View More on Mascot
+                    </a>
+                </div>
+            {% endif %}
+
+            <!-- Petzl Products -->
+            <h2 class="section-title wow fadeInUp">Petzl Safety Gear</h2>
+            {% if petzl_products %}
+                <div class="row">
+                    {% for product in petzl_products %}
+                        <div class="col-lg-3 col-md-6 col-sm-12 mb-4 wow fadeInUp" data-wow-delay="{{ loop.index0 * 0.2 }}s">
+                            <div class="card h-100 shadow-sm">
+                                <img src="{% if product.image_url %}{{ url_for('static', filename='img/products/' + product.image_url) }}?t={{ current_time }}{% else %}{{ url_for('static', filename='img/icon/placeholder.png') }}{% endif %}"
+                                     class="card-img-top" alt="{{ product.name | safe }}" style="max-height: 150px; object-fit: cover;">
+                                <p class="text-muted small text-center">Image: {{ product.image_url | default('None') }}</p>
+                                <div class="card-body text-center">
+                                    <h5 class="card-title">{{ product.name }}</h5>
+                                    <p class="card-text text-muted">Petzl Collection</p>
+                                    <a href="{{ product.manufacturer_url }}" class="btn btn-outline-primary" target="_blank">
+                                        View Details
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p class="text-center wow fadeInUp">No Petzl products available in this category.</p>
+            {% endif %}
+            <!-- Always show Petzl category link if the category is valid -->
+            {% if category in valid_petzl_categories %}
+                <div class="text-center mt-3 wow fadeInUp">
+                    <a href="{{ petzl_category_urls[category] }}" class="btn btn-primary" target="_blank">
+                        View More on Petzl
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="cta-section py-5 bg-light">
+        <div class="container text-center">
+            <h2 class="section-title wow fadeInUp">Need Assistance?</h2>
+            <p class="text-muted mb-4 wow fadeInUp" data-wow-delay="0.2s">Contact us for help finding the perfect gear!</p>
+            <a href="{{ url_for('main.contact') }}" class="btn btn-primary wow fadeInUp" data-wow-delay="0.4s">Get in Touch</a>
+        </div>
+    </section>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        $(document).ready(function() {
+            // Initialize Wow.js animations
+            new WOW().init();
+        });
+    </script>
+{% endblock %}

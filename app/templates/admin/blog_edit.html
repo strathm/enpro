@@ -1,0 +1,81 @@
+<!-- C:\Users\User\Desktop\enproWeb\app\templates\admin\blog_edit.html -->
+{% extends "base.html" %}
+{% block title %}{{ title }} - enpro{% endblock %}
+
+{% block content %}
+<section class="admin-blog-edit py-5">
+    <div class="container">
+        <h2 class="section-title text-center mb-4 fade-in">{{ title }}</h2>
+
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }} alert-dismissible fade show mt-3 animate__animated animate__fadeIn" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <!-- Blog Form -->
+        <div class="card shadow fade-in">
+            <div class="card-header bg-warning text-dark">
+                <h5 class="mb-0">{{ title }}</h5>
+            </div>
+            <div class="card-body">
+                <form method="POST" action="{{ url_for('admin.blog_new') }}" enctype="multipart/form-data">
+                    {{ form.hidden_tag() }}
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            {{ form.title.label(class="form-label") }}
+                            {{ form.title(class="form-control") }}
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            {{ form.slug.label(class="form-label") }}
+                            {{ form.slug(class="form-control") }}
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        {{ form.content.label(class="form-label") }}
+                        {{ form.content(class="form-control", rows="5") }}
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            {{ form.image_files.label(class="form-label") }}
+                            {{ form.image_files(class="form-control", multiple=True) }}
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            {{ form.alt_text.label(class="form-label") }}
+                            {{ form.alt_text(class="form-control") }}
+                        </div>
+                    </div>
+                    <div class="form-check mb-3">
+                        {{ form.is_published(class="form-check-input", id="is_published") }}
+                        <label class="form-check-label" for="is_published">
+                            {{ form.is_published.label.text }}
+                        </label>
+                    </div>
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        {{ form.submit(class="btn btn-primary") }}
+                        <a href="{{ url_for('admin.blog') }}" class="btn btn-outline-secondary">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block styles %}
+    <style>
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+{% endblock %}

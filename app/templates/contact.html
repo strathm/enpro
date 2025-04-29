@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+{% block title %}enpro - Contact Us{% endblock %}
+
+{% block content %}
+    <!-- Contact Hero Section -->
+    <section class="contact-hero" data-background="{{ url_for('static', filename='img/hero/contact-bg.jpg') }}">
+        <div class="hero-overlay">
+            <div class="container text-center">
+                <h1 class="hero-title fade-in-up">Get in Touch</h1>
+                <p class="hero-subtitle fade-in-up delay-02">
+                    We’re Here to Help with Your Workwear and Safety Gear Needs
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Form and Info Section -->
+    <section class="contact-section">
+        <div class="container">
+            <div class="row">
+                <!-- Contact Form -->
+                <div class="col-md-8 fade-in">
+                    <h2 class="section-title">Send Us a Message</h2>
+                    <form method="POST" action="{{ url_for('main.contact') }}" class="contact-form">
+                        <!-- CSRF Token -->
+                        {{ form.hidden_tag() }}
+
+                        <div class="form-group">
+                            <label for="name">{{ form.name.label }}</label>
+                            {{ form.name(class="form-control", placeholder="Your Name") }}
+                            {% if form.name.errors %}
+                                <div class="text-danger">
+                                    {% for error in form.name.errors %}{{ error }}<br>{% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            <label for="email">{{ form.email.label }}</label>
+                            {{ form.email(class="form-control", placeholder="Your Email") }}
+                            {% if form.email.errors %}
+                                <div class="text-danger">
+                                    {% for error in form.email.errors %}{{ error }}<br>{% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            <label for="message">{{ form.message.label }}</label>
+                            {{ form.message(class="form-control", rows="5", placeholder="Your Message") }}
+                            {% if form.message.errors %}
+                                <div class="text-danger">
+                                    {% for error in form.message.errors %}{{ error }}<br>{% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="text-center">
+                            {{ form.submit(class="btn btn-primary") }}
+                        </div>
+                    </form>
+                </div>
+                <!-- Contact Info -->
+                <div class="col-md-4 fade-in delay-02">
+                    <h2 class="section-title">Contact Information</h2>
+                    <ul class="contact-info list-unstyled">
+                        <li><strong>Email:</strong> <a href="mailto:mascot@enpro.co.ke">mascot@enpro.co.ke</a> & <a href="mailto:info@enpro.co.ke">info@enpro.co.ke</a></li>
+                        <li><strong>Phone:</strong> <a href="tel:+254716259317">0716259317</a> / <a href="tel:+254723474767">0723474767</a></li>
+                        <li><strong>Address:</strong> Mbandu Complex, off Langata road, Near Galleria Mall, 4th Floor, room NO.5</li>
+                    </ul>
+                    <div class="social-links mt-4">
+                        <a href="#" class="social-icon fade-in delay-04"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-icon fade-in delay-06"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-icon fade-in delay-08"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="cta-section">
+        <div class="container text-center">
+            <h2 class="section-title fade-in">Explore Our Products</h2>
+            <p class="fade-in delay-02">Check out our range of Mascot Workwear and Petzl gear!</p>
+            <a href="{{ url_for('main.products') }}" class="btn btn-primary fade-in-up delay-04">Shop Now</a>
+        </div>
+    </section>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        $(document).ready(function() {
+            // Apply background image from data-background attribute
+            const contactHero = $('.contact-hero');
+            const bgUrl = contactHero.data('background');
+            contactHero.css('background-image', `url('${bgUrl}')`);
+
+            // Form input focus effects
+            const formInputs = $('.form-control');
+            formInputs.on('focus', function() {
+                $(this).css({
+                    'border-color': '#ff6200',
+                    'transition': 'border-color 0.3s ease'
+                });
+            });
+            formInputs.on('blur', function() {
+                $(this).css('border-color', '#ced4da');
+            });
+        });
+    </script>
+{% endblock %}

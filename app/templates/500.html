@@ -1,0 +1,13 @@
+<!-- C:\Users\User\Desktop\enproWeb\app\templates\500.html -->
+{% extends "base.html" %}
+{% block title %}500 - Internal Server Error{% endblock %}
+
+{% block content %}
+<section class="py-5 text-center">
+    <div class="container">
+        <h1 class="section-title">500 - Internal Server Error</h1>
+        <p>Something went wrong on our end. Please try again later.</p>
+        <a href="{{ url_for('main.index') }}" class="btn btn-primary">Back to Home</a>
+    </div>
+</section>
+{% endblock %}

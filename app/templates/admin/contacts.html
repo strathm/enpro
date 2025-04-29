@@ -1,0 +1,104 @@
+<!-- C:\Users\User\Desktop\enproWeb\app\templates\admin\contacts.html -->
+{% extends "base.html" %}
+{% block title %}Manage Contact Submissions - enpro{% endblock %}
+
+{% block content %}
+<section class="admin-contacts py-5">
+    <div class="container">
+        <h2 class="section-title text-center mb-4 fade-in">Manage Contact Submissions</h2>
+
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }} alert-dismissible fade show mt-3 animate__animated animate__fadeIn" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <!-- Contact Submissions List -->
+        <div class="card shadow fade-in">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">Contact Submissions</h5>
+            </div>
+            <div class="card-body">
+                {% if submissions %}
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col">Message</th>
+                                    <th scope="col">Submitted</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for submission in submissions %}
+                                    <tr>
+                                        <td>{{ submission.name }}</td>
+                                        <td>{{ submission.email }}</td>
+                                        <td>{{ submission.message|truncate(50, True) }}</td>
+                                        <td>{{ submission.submitted_at.strftime('%Y-%m-%d %H:%M') }}</td>
+                                        <td>
+                                            {% if submission.is_resolved %}
+                                                <span class="badge bg-success">Resolved</span>
+                                            {% else %}
+                                                <span class="badge bg-warning">Pending</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {% if not submission.is_resolved %}
+                                                <form action="{{ url_for('admin.contact_resolve', id=submission.id) }}" method="POST" style="display:inline;">
+                                                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                                    <button type="submit" class="btn btn-sm btn-success" title="Mark as Resolved">
+                                                        <i class="fas fa-check"></i> Resolve
+                                                    </button>
+                                                </form>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% else %}
+                    <p class="text-muted text-center">No contact submissions found.</p>
+                {% endif %}
+            </div>
+            <div class="card-footer">
+                <a href="{{ url_for('admin.dashboard') }}" class="btn btn-outline-secondary">Back to Dashboard</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block styles %}
+    <style>
+        .form-label {
+            font-weight: 500;
+        }
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .table-responsive {
+            margin-bottom: 1rem;
+        }
+        .badge {
+            font-size: 0.9em;
+        }
+        .btn-sm {
+            padding: 0.25rem 0.5rem;
+        }
+    </style>
+{% endblock %}
