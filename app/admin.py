@@ -159,7 +159,23 @@ def product_new():
         logger.info(f"Product created: {product.name}, user={current_user.username}, host={request.host}")
         return redirect(url_for('admin.products', _external=True, _scheme='https'))
     return render_template('admin/product_edit.html', form=form, title='New Product')
+from flask import Blueprint, flash, redirect, url_for
+from app.models import ContactSubmission
+from app import db
 
+admin = Blueprint('admin', __name__)
+
+@admin.route('/contact/delete/<int:id>', methods=['POST'])
+def contact_delete(id):
+    submission = ContactSubmission.query.get_or_404(id)
+    try:
+        db.session.delete(submission)
+        db.session.commit()
+        flash('Contact submission deleted successfully.', 'success')
+    except Exception as e:
+        db.session.rollback()
+        flash('Error deleting submission: {}'.format(str(e)), 'danger')
+    return redirect(url_for('admin.contacts'))
 @admin_bp.route('/product/<int:id>/edit', methods=['GET', 'POST'])
 @admin_required
 def product_edit(id):
